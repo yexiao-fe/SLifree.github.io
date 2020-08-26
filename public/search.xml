@@ -4,6 +4,125 @@
   
     
     <entry>
+      <title>hexo 部署到 Github</title>
+      <link href="/2020/08/26/hexo-push-github/"/>
+      <url>/2020/08/26/hexo-push-github/</url>
+      
+        <content type="html"><![CDATA[<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Deployer not found: git</span><br><span class="line">如果未安装以上插件会发生时报错</span><br></pre></td></tr></table></figure><a id="more"></a><h3 id="创建github博客仓库"><a href="#创建github博客仓库" class="headerlink" title="创建github博客仓库"></a>创建github博客仓库</h3><p>每一个github账户最多只能创建一个这样可以直接使用域名访问的仓库，访问地址：<strong><em>username.github.io</em></strong>。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">注册的邮箱一定要验证，否则不会成功；</span><br><span class="line">仓库名字必须是：username.github.io，其中username是你的用户名；</span><br><span class="line">仓库创建成功不会立即生效，需要过一段时间，大概10-30分钟，或者更久。</span><br></pre></td></tr></table></figure><h2 id="config-yml配置"><a href="#config-yml配置" class="headerlink" title="_config.yml配置"></a>_config.yml配置</h2><h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  xxx: git</span><br><span class="line"></span><br><span class="line">xxx前面有两个空格，:后面有一个空格！切记空格不可多也不可少！</span><br></pre></td></tr></table></figure><h3 id="第一种https"><a href="#第一种https" class="headerlink" title="第一种https"></a>第一种https</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https:<span class="comment">//github.com/username/username.github.io.git</span></span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用这种方法时，输入用户密码无反应无报错，可能是网络原因或者是hexo版本原因</span><br><span class="line">如果有翻墙软件，可以尝试一下，所以不建议使用这种方式</span><br></pre></td></tr></table></figure><h3 id="第二种ssh"><a href="#第二种ssh" class="headerlink" title="第二种ssh"></a>第二种ssh</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:username/username.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure><h4 id="生成ssh密钥"><a href="#生成ssh密钥" class="headerlink" title="生成ssh密钥"></a>生成ssh密钥</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line">ssh-keygen -t rsa -C <span class="string">"邮箱地址"</span></span><br></pre></td></tr></table></figure><p>然后连续3次回车，最终会生成一个文档在用户目录下：id_rsa     id_rsa.pub     known_hosts<br>查看id_rsa.pub内容并备用：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat id_rsa.pub</span><br></pre></td></tr></table></figure><h4 id="配置密钥到github"><a href="#配置密钥到github" class="headerlink" title="配置密钥到github"></a>配置密钥到github</h4><p>1.添加公钥</p><p>github –&gt; username.github.io –&gt; Settings –&gt; Deploy keys –&gt; Add deploy key，然后将生成的+id_rsa.pub+中的内容全选复制到+key+输入框中，然后点击+Add+key+完成添加公钥。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">注意勾选  Allow write access</span><br><span class="line"></span><br><span class="line">不勾选在 hexo d 时会报以下错误：</span><br><span class="line">Error: Spawn failed</span><br><span class="line">    at ChildProcess.</span><br></pre></td></tr></table></figure><p>2.测试密码是否配置成功</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure><p>如果提示Are you sure you want to continue connecting (yes/no)?，输入yes，然后会看到：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hi username! You’ve successfully authenticated, but GitHub does not provide shell access.</span><br><span class="line">看到这个信息说明SSH已配置成功！</span><br></pre></td></tr></table></figure><p>3.配置用户密码</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">"github用户名"</span></span><br><span class="line">git config --global user.email  <span class="string">"github注册邮箱"</span></span><br></pre></td></tr></table></figure><p>4.hexo d</p><p>上传github</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Hexo </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>L7的使用方法</title>
+      <link href="/2020/08/10/gis-antv-l7/"/>
+      <url>/2020/08/10/gis-antv-l7/</url>
+      
+        <content type="html"><![CDATA[<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p><a href="https://l7.antv.vision/zh/docs/tutorial/quickstart" target="_blank" rel="noopener"><strong><em>查看文档</em></strong></a></p><h3 id="通过-L7-CDN-使用"><a href="#通过-L7-CDN-使用" class="headerlink" title="通过 L7 CDN 使用"></a>通过 L7 CDN 使用</h3><p>如果需要引用第三方地图API，请确保在先引入第三方API，然后引入L7。</p><a id="more"></a><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">!</span> <span class="attr">--</span>引入最新版的<span class="attr">L7--</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span> = <span class="string">'https://unpkg.com/@antv/l7'</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">!</span> <span class="attr">--</span>指定版本号引入<span class="attr">L7--</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span> = <span class="string">'https://unpkg.com/@antv/l7@2.0.11'</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><h3 id="通过-Module-bundle-使用"><a href="#通过-Module-bundle-使用" class="headerlink" title="通过 Module bundle 使用"></a>通过 Module bundle 使用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// L7 依赖</span><br><span class="line">npm install --save @antv/l7</span><br><span class="line"></span><br><span class="line">// 第三方底图依赖</span><br><span class="line">npm install --save @antv/l7-maps;</span><br></pre></td></tr></table></figure><h2 id="初始化地图"><a href="#初始化地图" class="headerlink" title="初始化地图"></a>初始化地图</h2><h3 id="高德底图"><a href="#高德底图" class="headerlink" title="高德底图"></a>高德底图</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Scene, PointLayer &#125; <span class="keyword">from</span> <span class="string">'@antv/l7'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; GaodeMap &#125; <span class="keyword">from</span> <span class="string">'@antv/l7-maps'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> scene = <span class="keyword">new</span> Scene(&#123;</span><br><span class="line">  id: <span class="string">'map'</span>,</span><br><span class="line">  map: <span class="keyword">new</span> GaodeMap(&#123;</span><br><span class="line">    pitch: <span class="number">35.210526315789465</span>,</span><br><span class="line">    style: <span class="string">'dark'</span>,</span><br><span class="line">    center: [ <span class="number">104.288144</span>, <span class="number">31.239692</span> ],</span><br><span class="line">    zoom: <span class="number">4.4</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><h3 id="Mapbox底图"><a href="#Mapbox底图" class="headerlink" title="Mapbox底图"></a>Mapbox底图</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Scene, HeatmapLayer &#125; <span class="keyword">from</span> <span class="string">'@antv/l7'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Mapbox &#125; <span class="keyword">from</span> <span class="string">'@antv/l7-maps'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> scene = <span class="keyword">new</span> Scene(&#123;</span><br><span class="line">  id: <span class="string">'map'</span>,</span><br><span class="line">  map: <span class="keyword">new</span> Mapbox(&#123;</span><br><span class="line">    style: <span class="string">'dark'</span>,</span><br><span class="line">    pitch: <span class="number">0</span>,</span><br><span class="line">    center: [ <span class="number">127.5671666579043</span>, <span class="number">7.445038892195569</span> ],</span><br><span class="line">    zoom: <span class="number">2.632456779444394</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> GIS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> AntV </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>百度地图的创建</title>
+      <link href="/2020/08/09/gis-amap/"/>
+      <url>/2020/08/09/gis-amap/</url>
+      
+        <content type="html"><![CDATA[<h2 id="申请密钥"><a href="#申请密钥" class="headerlink" title="申请密钥"></a>申请密钥</h2><p>获取账号和密钥。<a href="http://lbsyun.baidu.com/index.php?title=jspopularGL/guide/getkey" target="_blank" rel="noopener"><strong><em>查看文档</em></strong></a></p><h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><h3 id="引入插件"><a href="#引入插件" class="headerlink" title="引入插件"></a>引入插件</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"http://api.map.baidu.com/api?v=1.0&amp;type=webgl&amp;ak=您的密钥"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><a id="more"></a><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> map = <span class="keyword">new</span> BMapGL.Map(<span class="string">"container"</span>);          <span class="comment">// 创建地图实例 </span></span><br><span class="line"><span class="keyword">var</span> point = <span class="keyword">new</span> BMapGL.Point(<span class="number">116.404</span>, <span class="number">39.915</span>);  <span class="comment">// 创建点坐标 </span></span><br><span class="line">map.centerAndZoom(point, <span class="number">15</span>);                 <span class="comment">// 初始化地图，设置中心点坐标和地图级别</span></span><br></pre></td></tr></table></figure><h3 id="滚轮"><a href="#滚轮" class="headerlink" title="滚轮"></a>滚轮</h3><p>地图的鼠标滚轮缩放默认是关闭的，需要配置开启。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map.enableScrollWheelZoom(<span class="literal">true</span>);     <span class="comment">//开启鼠标滚轮缩放</span></span><br></pre></td></tr></table></figure><h3 id="旋转与倾斜"><a href="#旋转与倾斜" class="headerlink" title="旋转与倾斜"></a>旋转与倾斜</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">map.setHeading(<span class="number">64.5</span>);   <span class="comment">//设置地图旋转角度</span></span><br><span class="line">map.setTilt(<span class="number">73</span>);       <span class="comment">//设置地图的倾斜角度</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> GIS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Amap </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>高德地图的创建</title>
+      <link href="/2020/08/09/gis-bmap/"/>
+      <url>/2020/08/09/gis-bmap/</url>
+      
+        <content type="html"><![CDATA[<h2 id="准备key"><a href="#准备key" class="headerlink" title="准备key"></a>准备key</h2><p>虽说有的功能不用key也能实现，但是还是建议先申请一个属于自己的key，以供后面的开发。<br><a href="https://lbs.amap.com/api/javascript-api/guide/abc/prepare" target="_blank" rel="noopener"><strong><em>查看文档</em></strong></a><br><a href="https://lbs.amap.com/dev/id/choose" target="_blank" rel="noopener"><strong><em>注册开发者账号</em></strong></a></p><h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><h3 id="引入插件"><a href="#引入插件" class="headerlink" title="引入插件"></a>引入插件</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"https://webapi.amap.com/maps?v=1.4.15&amp;key=您申请的key值"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> map = <span class="keyword">new</span> AMap.Map(<span class="string">'container'</span>, &#123;</span><br><span class="line">    zoom:<span class="number">11</span>,<span class="comment">//级别</span></span><br><span class="line">    center: [<span class="number">116.397428</span>, <span class="number">39.90923</span>],<span class="comment">//中心点坐标</span></span><br><span class="line">    viewMode:<span class="string">'3D'</span><span class="comment">//使用3D视图</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><a id="more"></a><h2 id="地图的类和方法"><a href="#地图的类和方法" class="headerlink" title="地图的类和方法"></a>地图的类和方法</h2><p><a href="https://lbs.amap.com/api/javascript-api/reference/map" target="_blank" rel="noopener"><strong><em>查看文档</em></strong></a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> GIS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Bmap </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>3D场景的初始化</title>
+      <link href="/2020/08/08/visual-three/"/>
+      <url>/2020/08/08/visual-three/</url>
+      
+        <content type="html"><![CDATA[<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scene = <span class="keyword">new</span> THREE.Scene();</span><br></pre></td></tr></table></figure><h2 id="相机"><a href="#相机" class="headerlink" title="相机"></a>相机</h2><p>在Threejs中相机的表示是THREE.Camera，它是相机的抽象基类，其子类有两种相机，分别是正投影相机THREE.OrthographicCamera和透视投影相机THREE.PerspectiveCamera。</p><a id="more"></a><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> camera = <span class="keyword">new</span> THREE.PerspectiveCamera( <span class="number">75</span>, width / height, <span class="number">0.1</span>, <span class="number">1000</span> );</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">width:画布宽</span><br><span class="line">height:画布高</span><br></pre></td></tr></table></figure><p>第一个参数是视野角度（FOV）。视野角度就是无论在什么时候，你所能在显示器上看到的场景的范围，它的值是角度单位。</p><p>第二个参数是长宽比（aspect ratio）。 也就是你用一个物体的宽除以它的高的值。比如说，当你在一个宽屏电视上播放老电影时，可以看到图像仿佛是被压扁的。</p><p>接下来的两个参数是近截面（near）和远截面（far）。 当物体某些部分比摄像机的远截面远或者比近截面近的时候，该这些部分将不会被渲染到场景中。或许现在你不用担心这个值的影响，但未来为了获得更好的渲染性能，你将可以在你的应用程序里去设置它。</p><h2 id="渲染器"><a href="#渲染器" class="headerlink" title="渲染器"></a>渲染器</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> renderer = <span class="keyword">new</span> THREE.WebGLRenderer();</span><br><span class="line">或</span><br><span class="line"><span class="keyword">var</span> renderer = <span class="keyword">new</span> THREE.WebGLRenderer(&#123;</span><br><span class="line">    antialias: <span class="literal">true</span>, <span class="comment">//表示是否开启反锯齿</span></span><br><span class="line">    alpha: <span class="literal">true</span>, <span class="comment">//表示是否可以设置背景色透明</span></span><br><span class="line">    precision: <span class="string">'highp'</span>, <span class="comment">// highp|mediump|lowp 表示着色精度选择</span></span><br><span class="line">    premultipliedAlpha: <span class="literal">false</span>, <span class="comment">//表示是否可以设置像素深度（用来度量图像的分辨率）</span></span><br><span class="line">    preserveDrawingBuffer: <span class="literal">true</span>, <span class="comment">//表示是否保存绘图缓冲</span></span><br><span class="line">    maxLights: <span class="number">3</span>, <span class="comment">//最大灯光数</span></span><br><span class="line">    stencil: <span class="literal">false</span> <span class="comment">//表示是否使用模板字体或图案</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><h2 id="指定渲染器的高宽"><a href="#指定渲染器的高宽" class="headerlink" title="指定渲染器的高宽"></a>指定渲染器的高宽</h2><p>和画布框大小一致</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">renderer.setSize( width, height );</span><br></pre></td></tr></table></figure><h2 id="把场景canvas添加到dom元素中"><a href="#把场景canvas添加到dom元素中" class="headerlink" title="把场景canvas添加到dom元素中"></a>把场景canvas添加到dom元素中</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.querySelector(获取dom标签).appendChild(renderer.domElement);</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 可视化 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> three.js </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>网络协议及传输</title>
       <link href="/2020/08/07/front-end-wangluo/"/>
       <url>/2020/08/07/front-end-wangluo/</url>
@@ -32,7 +151,7 @@
       
       <categories>
           
-          <category> 其他 </category>
+          <category> 常用命令 </category>
           
       </categories>
       
@@ -51,7 +170,7 @@
       
       <categories>
           
-          <category> 其他 </category>
+          <category> 常用命令 </category>
           
       </categories>
       
@@ -823,7 +942,7 @@
       <link href="/2020/07/21/hexo/"/>
       <url>/2020/07/21/hexo/</url>
       
-        <content type="html"><![CDATA[<p>查看<a href="https://www.runoob.com/markdown/md-tutorial.html" target="_blank" rel="noopener">Markdown</a>的使用方法和<a href="https://hexo.io/zh-cn/api/" target="_blank" rel="noopener">Hexo</a>的API文档，请点击此链接。</p><h2 id="基本环境的搭建"><a href="#基本环境的搭建" class="headerlink" title="基本环境的搭建"></a>基本环境的搭建</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">安装 [<span class="string">"Node.js"</span>](https://nodejs.org/zh-cn/)</span><br><span class="line">安装 [<span class="string">"Git"</span>](https://git-scm.com/) Mac自带git可选择不安装</span><br></pre></td></tr></table></figure><a id="more"></a><h2 id="Hexo的初始化"><a href="#Hexo的初始化" class="headerlink" title="Hexo的初始化"></a>Hexo的初始化</h2><h3 id="Hexo的安装"><a href="#Hexo的安装" class="headerlink" title="Hexo的安装"></a>Hexo的安装</h3><p>在安装hexo时,出现权限报错可以使用：sudo npm install hexo-cli -g,但不建议用 sudo 命令,<br>建议使用以下命令：<br>第一步：赋予目录权限<br>第二步：安装</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R `whoami` /usr/<span class="built_in">local</span>/lib/node_modules</span><br><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure><h3 id="检查Hexo是否安装成功"><a href="#检查Hexo是否安装成功" class="headerlink" title="检查Hexo是否安装成功"></a>检查Hexo是否安装成功</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>创建一个空的文件夹，进入当前文件夹，执行命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure><p>安装所需插件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure><p>开启服务</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure><p>浏览器输入：<a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a></p><p>默认端口：4000,当提示被占用时，可以修改端口号，有两种方法</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用<span class="string">"hexo s -p 80"</span> ，可以暂时修改启动端口</span><br><span class="line">找到<span class="string">"node_modules\hexo-server\index.js"</span>文件，可以修改默认的port值</span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<p>查看<a href="https://www.runoob.com/markdown/md-tutorial.html" target="_blank" rel="noopener">Markdown</a>的使用方法和<a href="https://hexo.io/zh-cn/api/" target="_blank" rel="noopener">Hexo</a>的API文档，请点击此链接。</p><h2 id="基本环境的搭建"><a href="#基本环境的搭建" class="headerlink" title="基本环境的搭建"></a>基本环境的搭建</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">安装 [<span class="string">"Node.js"</span>](https://nodejs.org/zh-cn/)</span><br><span class="line">安装 [<span class="string">"Git"</span>](https://git-scm.com/) Mac自带git可选择不安装</span><br></pre></td></tr></table></figure><a id="more"></a><h2 id="Hexo的初始化"><a href="#Hexo的初始化" class="headerlink" title="Hexo的初始化"></a>Hexo的初始化</h2><h3 id="Hexo的安装"><a href="#Hexo的安装" class="headerlink" title="Hexo的安装"></a>Hexo的安装</h3><p>以v：4.2.1为例</p><p>在安装hexo时,出现权限报错可以使用：sudo npm install hexo-cli -g,但不建议用 sudo 命令,<br>建议使用以下命令：<br>第一步：赋予目录权限<br>第二步：安装</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R `whoami` /usr/<span class="built_in">local</span>/lib/node_modules</span><br><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure><h3 id="检查Hexo是否安装成功"><a href="#检查Hexo是否安装成功" class="headerlink" title="检查Hexo是否安装成功"></a>检查Hexo是否安装成功</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>创建一个空的文件夹，进入当前文件夹，执行命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure><p>安装所需插件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure><p>开启服务</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure><p>浏览器输入：<a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a></p><p>默认端口：4000,当提示被占用时，可以修改端口号，有两种方法</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用<span class="string">"hexo s -p 80"</span> ，可以暂时修改启动端口</span><br><span class="line">找到<span class="string">"node_modules\hexo-server\index.js"</span>文件，可以修改默认的port值</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
