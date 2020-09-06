@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>VSCode使用注意事项</title>
+      <link href="/2020/09/06/other-vscode/"/>
+      <url>/2020/09/06/other-vscode/</url>
+      
+        <content type="html"><![CDATA[<p>Visual Studio Code is a lightweight but powerful source code editor which runs on your desktop and is available for Windows, macOS and Linux. It comes with built-in support for JavaScript, TypeScript and Node.js and has a rich ecosystem of extensions for other languages (such as C++, C#, Java, Python, PHP, Go) and runtimes (such as .NET and Unity). <a href="https://code.visualstudio.com/" target="_blank" rel="noopener"><strong><em>下载地址</em></strong></a></p><a id="more"></a><h2 id="常用插件"><a href="#常用插件" class="headerlink" title="常用插件"></a>常用插件</h2><h3 id="Atuo-Rename-Tag"><a href="#Atuo-Rename-Tag" class="headerlink" title="Atuo Rename Tag"></a>Atuo Rename Tag</h3><p>修改 html 标签，自动帮你完成头部和尾部闭合标签的同步修改</p><h3 id="Atuo-Close-Tag"><a href="#Atuo-Close-Tag" class="headerlink" title="Atuo Close Tag"></a>Atuo Close Tag</h3><p>自动闭合 html 标签</p><h3 id="Chinese-Simplified-Language-Pack-for-Visual-Studio-Code"><a href="#Chinese-Simplified-Language-Pack-for-Visual-Studio-Code" class="headerlink" title="Chinese (Simplified) Language Pack for Visual Studio Code"></a>Chinese (Simplified) Language Pack for Visual Studio Code</h3><p>文（简体）语言包，将界面转换为中文</p><h3 id="Live-server"><a href="#Live-server" class="headerlink" title="Live server"></a>Live server</h3><p>开启一个服务，类似http-server命令</p><h3 id="open-in-browser"><a href="#open-in-browser" class="headerlink" title="open in browser"></a>open in browser</h3><p>在浏览器打开，可以选择电脑已装浏览器</p><h2 id="命令报错的解决方法"><a href="#命令报错的解决方法" class="headerlink" title="命令报错的解决方法"></a>命令报错的解决方法</h2><p>在用下面方法时，要确保node -v,npm -v,cnpm -v命令在cmd命令上可以正常运行。</p><h3 id="npm报错"><a href="#npm报错" class="headerlink" title="npm报错"></a>npm报错</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error: EPERM: operation not permitted, mkdir ‘C:\Program Files\nodejs\node_cache_locks’</span><br></pre></td></tr></table></figure><p>解决方法：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">权限不够，需要你在打开vscode时选择以管理员身份打开。</span><br><span class="line">或者在vscode的图标点击右键，选择属性-&gt;兼容性，<span class="string">"勾选"</span> 以管理员身份运行此程序。</span><br></pre></td></tr></table></figure><h3 id="cnpm报错"><a href="#cnpm报错" class="headerlink" title="cnpm报错"></a>cnpm报错</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cnpm : 无法加载文件 D:\Program Files\nodejs\node_global\cnpm.ps1，因为在此系统上禁止运行脚本。有关详细信息，请参阅 https:/go.microsoft.com/fwlink/?LinkID=135170 中的 about_Execution_Policies。</span><br><span class="line">+ cnpm run serve</span><br><span class="line">+ FullyQualifiedErrorId : UnauthorizedAccess</span><br><span class="line">cnpm : 无法加载文件 D:\Program Files\nodejs\node_global\cnpm.ps1，因为在此系统上禁止运行脚本。有关详细信息，请参阅 https:/go.microsoft.com/fwlink/?LinkID=135170 中的 about_Execution_Policies。</span><br><span class="line">所在位置 行:1 字符: 1</span><br><span class="line">+ cnpm run serve</span><br><span class="line">+ ~~~~</span><br><span class="line">+ CategoryInfo : SecurityError: (:) []，PSSecurityException</span><br><span class="line">+ FullyQualifiedErrorId : UnauthorizedAccess</span><br></pre></td></tr></table></figure><p>解决方法：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">右击VSCode图标，选择以管理员身份运行</span><br><span class="line">在终端中执行 <span class="string">"get-ExecutionPolicy"</span> ，显示Restricted，表示状态是禁止的</span><br><span class="line">再执行 <span class="string">"set-ExecutionPolicy RemoteSigned"</span></span><br><span class="line">再执行 <span class="string">"get-ExecutionPolicy"</span> ，显示RemoteSigned，则表示状态解禁，可以运行</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 其他 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> VSCode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>hexo 部署到 Github</title>
       <link href="/2020/08/26/hexo-push-github/"/>
       <url>/2020/08/26/hexo-push-github/</url>
@@ -342,9 +367,9 @@
       
         <tags>
             
-            <tag> TypeScript </tag>
-            
             <tag> Vue.js </tag>
+            
+            <tag> TypeScript </tag>
             
         </tags>
       
