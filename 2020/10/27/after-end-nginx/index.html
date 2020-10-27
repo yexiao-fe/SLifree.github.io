@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="Nginx 的安装下载安装包 地址建议下载稳定版本（Stable version），以nginx-1.18.0为例： 12linux环境：&quot;nginx-1.18.0&quot;windows环境：&quot;nginx&#x2F;Windows-1.18.0 &quot; 安装Windows随便放在一个位置，我一般前端测试的时候放在桌面，解压文件夹。 Linux一般放在 &#x2F;usr&#x2F;local 下面。 安装步骤1234567cd &#x2F;usr">
+<meta name="description" content="Nginx 的安装下载安装包 地址建议下载稳定版本（Stable version），以nginx-1.18.0为例： 12linux环境：&quot;nginx-1.18.0&quot;windows环境：&quot;nginx&#x2F;Windows-1.18.0 &quot; 安装Windows随便放在一个位置，我一般前端测试的时候放在桌面，解压文件夹。 Linux一般放在 &#x2F;usr&#x2F;local 下面。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx 的安装及配置">
 <meta property="og:url" content="http://yoursite.com/2020/10/27/after-end-nginx/index.html">
 <meta property="og:site_name" content="也笑的博客">
-<meta property="og:description" content="Nginx 的安装下载安装包 地址建议下载稳定版本（Stable version），以nginx-1.18.0为例： 12linux环境：&quot;nginx-1.18.0&quot;windows环境：&quot;nginx&#x2F;Windows-1.18.0 &quot; 安装Windows随便放在一个位置，我一般前端测试的时候放在桌面，解压文件夹。 Linux一般放在 &#x2F;usr&#x2F;local 下面。 安装步骤1234567cd &#x2F;usr">
+<meta property="og:description" content="Nginx 的安装下载安装包 地址建议下载稳定版本（Stable version），以nginx-1.18.0为例： 12linux环境：&quot;nginx-1.18.0&quot;windows环境：&quot;nginx&#x2F;Windows-1.18.0 &quot; 安装Windows随便放在一个位置，我一般前端测试的时候放在桌面，解压文件夹。 Linux一般放在 &#x2F;usr&#x2F;local 下面。">
 <meta property="article:published_time" content="2020-10-27T12:16:54.000Z">
-<meta property="article:modified_time" content="2020-10-27T12:20:19.640Z">
+<meta property="article:modified_time" content="2020-10-27T12:21:56.550Z">
 <meta property="article:author" content="slifree">
 <meta property="article:tag" content="nginx">
 <meta name="twitter:card" content="summary">
@@ -391,6 +391,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">linux环境：<span class="string">"nginx-1.18.0"</span></span><br><span class="line">windows环境：<span class="string">"nginx/Windows-1.18.0 "</span></span><br></pre></td></tr></table></figure>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>随便放在一个位置，我一般前端测试的时候放在桌面，解压文件夹。</p>
 <h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>一般放在 /usr/local 下面。</p>
+<a id="more"></a>
+
 <h4 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span></span><br><span class="line">rz	上传文件，选择下载的压缩包</span><br><span class="line">tar -zxvf nginx-1.18.0.tar.gz	解压压缩包</span><br><span class="line"><span class="built_in">cd</span> nginx-1.18.0	进入nginx文件夹</span><br><span class="line">./configure --prefix=/usr/<span class="built_in">local</span>/nginx-1.18.0	明确接下来文件的安装位置，也可直接： <span class="string">"./configure"</span>  此命令执行完会生成<span class="string">"Makefile"</span>文件</span><br><span class="line">make	编译</span><br><span class="line">make install	会出现<span class="string">"sbin"</span>文件夹</span><br></pre></td></tr></table></figure>
 
 <h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><h3 id="Widows"><a href="#Widows" class="headerlink" title="Widows"></a>Widows</h3><p>可以通过命令启动，也可以通过双击nginx.exe启动。</p>
